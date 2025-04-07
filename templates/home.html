@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - House Price Prediction</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Animated Gradient Background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #4a90e2, #357abd, #6c63ff, #8e44ad);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            z-index: -1;
+        }
+
+        /* Keyframe Animation for Gradient */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px 20px;
+            margin: 0 15px;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .navbar a:hover {
+            background-color: #357ABD;
+            transform: translateY(-3px);
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .button-group a {
+            display: inline-block;
+            padding: 15px 25px;
+            color: white;
+            background-color: #4a90e2;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            border: none;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button-group a:hover {
+            background-color: #357ABD;
+            transform: translateY(-3px);
+        }
+
+        #info {
+            font-size: 1.1rem;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="background"></div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="/index">Prediction</a>
+        <a href="/visualization">Visualization</a>
+        <a href="/imageclass">Classify Image</a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1>🏡 Welcome to the House Price Prediction App</h1>
+        <p>Use our powerful machine learning model to predict house prices based on various features such as area, number of bedrooms, and bathrooms. Explore the data and visualize trends to make more informed decisions.</p>
+
+        
+        <div id="info">
+            <p>Simply provide the required information in the prediction form, and see the estimated house price based on our data model.</p>
+        </div>
+    </div>
+
+</body>
+</html>

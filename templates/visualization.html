@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Chart: House Price vs Area</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        #loading {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 400px !important;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button styles for links */
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            border: 2px solid #4a90e2;
+            background-color: white;
+            transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        a:hover {
+            color: white;
+            background-color: #4a90e2;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Chart: House Price vs Area</h1>
+        <canvas id="myChart"></canvas>
+
+        <div id="loading">Loading chart data...</div>
+        <div>
+            <a href="/">Back to Input Form</a>
+            <!-- <a href="/result">Back to Prediction Result</a> -->
+        </div>
+    </div>
+
+    <script>
+        fetch('/chart-data')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'House Price vs Area',
+                            data: data.area.map((area, index) => ({
+                                x: area,
+                                y: data.price[index]
+                            })),
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Area (sqft)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'House Price ($)'
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                document.getElementById('loading').innerText = 'Failed to load chart.';
+                console.error('Error fetching chart data:', error);
+            });
+    </script>
+</body>
+</html>

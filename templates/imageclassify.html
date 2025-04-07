@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        img {
+            max-width: 300px;
+            margin: 20px 0;
+        }
+        input {
+            padding: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Upload an Image for Classification</h1>
+
+    <!-- File Upload -->
+    <input type="file" id="imageUpload" accept="image/*">
+    <button onclick="classifyImage()">Classify Image</button>
+
+    <!-- Display Image -->
+    <div>
+        <img id="image" src="" alt="Uploaded Image" style="display: none;">
+    </div>
+
+    <!-- Result -->
+    <div id="result" style="margin-top: 20px;"></div>
+
+    <script>
+        let imageElement = document.getElementById('image');
+        let resultElement = document.getElementById('result');
+        let model;
+
+        // Load the MobileNet model
+        async function loadModel() {
+            model = await mobilenet.load();
+            console.log("Model Loaded");
+        }
+
+        // Call this function to classify the image
+        async function classifyImage() {
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
+
+            if (file) {
+                // Display the image
+                imageElement.src = URL.createObjectURL(file);
+                imageElement.style.display = 'block';
+
+                // Wait for the image to load
+                imageElement.onload = async () => {
+                    // Classify the image
+                    const predictions = await model.classify(imageElement);
+                    resultElement.innerHTML = `
+                        <h2>Predictions:</h2>
+                        <p>Class: ${predictions[0].className}</p>
+                        <p>Probability: ${predictions[0].probability.toFixed(3)}</p>
+                    `;
+                };
+            }
+        }
+
+        // Load model on page load
+        window.onload = loadModel;
+    </script>
+
+</body>
+</html>
